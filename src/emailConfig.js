@@ -12,8 +12,10 @@ export const emailConfig = {
   TEMPLATE_ID: "YOUR_TEMPLATE_ID_HERE"
 };
 
-// Alternative: Formspree (easier setup)
+// Formspree Configuration (Recommended - Easier setup)
 export const formspreeConfig = {
   // Your Formspree endpoint (sign up at https://formspree.io/)
+  // This will send emails to saikiran.shet@gmail.com
+  // Replace YOUR_FORM_ID with the actual form ID from Formspree
   ENDPOINT: "https://formspree.io/f/YOUR_FORM_ID"
 }; 

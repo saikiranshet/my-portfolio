@@ -451,6 +451,12 @@ body.dark .sidebar-footer .social-icon:hover, .app-root.dark .sidebar-footer .so
 /* Dark mode mobile styles */
 body.dark .mobile-menu-btn, .app-root.dark .mobile-menu-btn {
   color: #ffd600;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+body.dark .mobile-menu-btn:hover, .app-root.dark .mobile-menu-btn:hover {
+  background: rgba(255, 215, 0, 0.2);
 }
 
 @media (max-width: 600px) {
@@ -618,19 +624,7 @@ body.dark .mobile-menu-btn, .app-root.dark .mobile-menu-btn {
     color: #ffd600;
   }
   
-  .mobile-menu-btn {
-    display: block;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    z-index: 1000;
-  }
+
   
   .sidebar-nav {
     display: none;
@@ -860,7 +854,33 @@ body.dark .mobile-menu-btn, .app-root.dark .mobile-menu-btn {
   }
   
   .mobile-menu-btn {
-    display: block;
+    display: flex !important;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.6rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mobile-menu-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+  
+  .mobile-menu-btn:active {
+    transform: scale(0.95);
   }
   
   .sidebar-nav {

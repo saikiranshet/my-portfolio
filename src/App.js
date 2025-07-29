@@ -148,7 +148,7 @@ function App() {
       });
     }
     // Option 2: Formspree (if configured)
-    else if (formspreeConfig.ENDPOINT !== "https://formspree.io/f/YOUR_FORM_ID") {
+    else if (formspreeConfig.ENDPOINT !== "https://formspree.io/f/YOUR_FORM_ID" && !formspreeConfig.ENDPOINT.includes("YOUR_FORM_ID")) {
       fetch(formspreeConfig.ENDPOINT, {
         method: 'POST',
         headers: {
@@ -180,9 +180,9 @@ function App() {
       const subject = encodeURIComponent('Portfolio Contact from ' + form.name);
       const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`);
       window.open(`mailto:Saikiran.shet@gmail.com?subject=${subject}&body=${body}`);
-      setFormStatus('Opening email client...');
+      setFormStatus('Email service not configured. Opening email client... Please send manually.');
       setForm({ name: '', email: '', message: '' });
-      setTimeout(() => setFormStatus(''), 2000);
+      setTimeout(() => setFormStatus(''), 4000);
     }
   };
 
