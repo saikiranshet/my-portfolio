@@ -6,6 +6,8 @@ import { Link as ScrollLink, Element, Events, scroller } from 'react-scroll';
 import Modal from 'react-modal';
 import { motion } from 'framer-motion';
 import Switch from 'react-switch';
+import emailjs from '@emailjs/browser';
+import { emailConfig, formspreeConfig } from './emailConfig';
 
 const sections = [
   { id: 'about', label: 'About', icon: 'fa-user' },
@@ -63,6 +65,13 @@ function App() {
   const [formStatus, setFormStatus] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Initialize EmailJS (only if configured)
+  useEffect(() => {
+    if (emailConfig.PUBLIC_KEY !== "YOUR_PUBLIC_KEY_HERE") {
+      emailjs.init(emailConfig.PUBLIC_KEY);
+    }
+  }, []);
+
   // Scroll event for active section highlight
   useEffect(() => {
     Events.scrollEvent.register('begin', () => {});
@@ -106,14 +115,75 @@ function App() {
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+  
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setFormStatus('Sending...');
-    setTimeout(() => {
-      setFormStatus('Message sent!');
+    
+    // Option 1: EmailJS (if configured)
+    if (emailConfig.PUBLIC_KEY !== "YOUR_PUBLIC_KEY_HERE") {
+      const templateParams = {
+        from_name: form.name,
+        from_email: form.email,
+        message: form.message,
+        to_name: 'Saikiran Shet',
+        reply_to: form.email,
+      };
+
+      emailjs.send(
+        emailConfig.SERVICE_ID,
+        emailConfig.TEMPLATE_ID,
+        templateParams
+      )
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        setFormStatus('Message sent successfully!');
+        setForm({ name: '', email: '', message: '' });
+        setTimeout(() => setFormStatus(''), 3000);
+      })
+      .catch((err) => {
+        console.log('FAILED...', err);
+        setFormStatus('Failed to send message. Please try again or email me directly at Saikiran.shet@gmail.com');
+        setTimeout(() => setFormStatus(''), 5000);
+      });
+    }
+    // Option 2: Formspree (if configured)
+    else if (formspreeConfig.ENDPOINT !== "https://formspree.io/f/YOUR_FORM_ID") {
+      fetch(formspreeConfig.ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
+      })
+      .then((response) => {
+        if (response.ok) {
+          setFormStatus('Message sent successfully!');
+          setForm({ name: '', email: '', message: '' });
+          setTimeout(() => setFormStatus(''), 3000);
+        } else {
+          throw new Error('Failed to send');
+        }
+      })
+      .catch((err) => {
+        console.log('FAILED...', err);
+        setFormStatus('Failed to send message. Please try again or email me directly at Saikiran.shet@gmail.com');
+        setTimeout(() => setFormStatus(''), 5000);
+      });
+    }
+    // Option 3: Fallback - redirect to email client
+    else {
+      const subject = encodeURIComponent('Portfolio Contact from ' + form.name);
+      const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`);
+      window.open(`mailto:Saikiran.shet@gmail.com?subject=${subject}&body=${body}`);
+      setFormStatus('Opening email client...');
       setForm({ name: '', email: '', message: '' });
       setTimeout(() => setFormStatus(''), 2000);
-    }, 1200);
+    }
   };
 
   // Mobile menu toggle
@@ -161,7 +231,7 @@ function App() {
         </nav>
         <div className="sidebar-footer">
           <a className="social-icon" href="https://www.linkedin.com/in/saikiran-tukaram-shet-39b146121/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i className="fab fa-linkedin"></i></a>
-          <a className="social-icon" href="#" title="GitHub"><i className="fab fa-github"></i></a>
+          <a className="social-icon" href="https://github.com/saikiranshet/my-portfolio" target="_blank" rel="noopener noreferrer" title="GitHub"><i className="fab fa-github"></i></a>
           <a className="social-icon" href="mailto:Saikiran.shet@gmail.com" title="Email"><i className="fa-solid fa-envelope"></i></a>
         </div>
         <div style={{ marginTop: 20 }}>
@@ -330,7 +400,7 @@ function App() {
             <button type="submit">Send</button>
             {formStatus && <div className="form-status">{formStatus}</div>}
           </form>
-          <p style={{ marginTop: 16 }}>Connect with me on <a href="https://www.linkedin.com/in/saikiran-tukaram-shet-39b146121/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+          <p style={{ marginTop: 16 }}>Connect with me on <a href="https://www.linkedin.com/in/saikiran-tukaram-shet-39b146121/" target="_blank" rel="noopener noreferrer">LinkedIn</a> and <a href="https://github.com/saikiranshet/my-portfolio" target="_blank" rel="noopener noreferrer">GitHub</a></p>
         </Element>
         <footer>
           <p>&copy; 2024 Saikiran Shet</p>

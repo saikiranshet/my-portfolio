@@ -618,12 +618,23 @@ body.dark .mobile-menu-btn, .app-root.dark .mobile-menu-btn {
     color: #ffd600;
   }
   
-    .mobile-menu-btn {
+  .mobile-menu-btn {
     display: block;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
   }
   
   .sidebar-nav {
     display: none;
+    transition: all 0.3s ease;
   }
   
   .sidebar-nav.mobile-open {
@@ -633,24 +644,6 @@ body.dark .mobile-menu-btn, .app-root.dark .mobile-menu-btn {
   .sidebar nav {
     margin: 1rem 0;
   }
-
-.mobile-menu-btn {
-  display: none;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1000;
-}
-
-.sidebar-nav {
-  transition: all 0.3s ease;
-}
   
   .sidebar nav ul {
     display: flex;
@@ -659,30 +652,77 @@ body.dark .mobile-menu-btn, .app-root.dark .mobile-menu-btn {
     justify-content: center;
     gap: 0.5rem;
     margin: 0;
+    padding: 0;
   }
   
   .sidebar nav ul li {
     margin: 0;
+    list-style: none;
   }
   
   .sidebar nav ul li a {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
-    border-radius: 20px;
+    border-radius: 25px;
     white-space: nowrap;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .sidebar nav ul li a.active {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-weight: 600;
   }
   
   .sidebar-footer {
     margin-top: 1rem;
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    padding: 0.5rem 0;
+  }
+  
+  .sidebar-footer .social-icon {
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar-footer .social-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px) scale(1.1);
   }
   
   .content {
     margin-left: 0;
     padding: 1rem;
     max-width: 100%;
+  }
+  
+  /* Dark mode toggle container for mobile */
+  .sidebar > div:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
   
   .hero-banner {
