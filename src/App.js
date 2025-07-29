@@ -61,6 +61,7 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Scroll event for active section highlight
   useEffect(() => {
@@ -115,6 +116,16 @@ function App() {
     }, 1200);
   };
 
+  // Mobile menu toggle
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Close mobile menu when clicking on a link
+  const handleMobileNavClick = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <div className={`app-root${darkMode ? ' dark' : ''}`}> 
       <aside className="sidebar">
@@ -123,7 +134,13 @@ function App() {
           <h1>Saikiran Shet</h1>
           <p className="sidebar-title">SDET-2/QA Engineer</p>
         </div>
-        <nav>
+        
+        {/* Mobile menu button */}
+        <button className="mobile-menu-btn" onClick={toggleMobileMenu}>
+          <i className={`fa-solid ${mobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+        </button>
+        
+        <nav className={`sidebar-nav ${mobileMenuOpen ? 'mobile-open' : ''}`}>
           <ul>
             {sections.map((s) => (
               <li key={s.id}>
@@ -134,6 +151,7 @@ function App() {
                   offset={-80}
                   className={activeSection === s.id ? 'active' : ''}
                   spy={true}
+                  onClick={handleMobileNavClick}
                 >
                   <i className={`fa-solid ${s.icon}`}></i> {s.label}
                 </ScrollLink>
