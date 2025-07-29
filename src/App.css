@@ -180,6 +180,19 @@ body, .app-root {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(30,40,90,0.3);
 }
+
+.resume-btn:disabled {
+  background: #9fa8da;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 16px rgba(30,40,90,0.1);
+}
+
+.resume-btn:disabled:hover {
+  background: #9fa8da;
+  transform: none;
+  box-shadow: 0 4px 16px rgba(30,40,90,0.1);
+}
 .resume-btn i {
   font-size: 1.4rem;
 }

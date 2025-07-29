@@ -64,6 +64,7 @@ function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // Initialize EmailJS (only if configured)
   useEffect(() => {
@@ -196,6 +197,48 @@ function App() {
     setMobileMenuOpen(false);
   };
 
+  const handleResumeDownload = () => {
+    setIsDownloading(true);
+    try {
+      // Method 1: Using fetch to get the file and create blob
+      fetch(process.env.PUBLIC_URL + '/resume.pdf')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'Saikiran_Shet_Resume.pdf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+          setIsDownloading(false);
+        })
+        .catch(error => {
+          console.error('Download failed:', error);
+          // Fallback method
+          const link = document.createElement('a');
+          link.href = process.env.PUBLIC_URL + '/resume.pdf';
+          link.download = 'Saikiran_Shet_Resume.pdf';
+          link.target = '_blank';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setIsDownloading(false);
+        });
+    } catch (error) {
+      console.error('Download error:', error);
+      // Final fallback - open in new tab
+      window.open(process.env.PUBLIC_URL + '/resume.pdf', '_blank');
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <div className={`app-root${darkMode ? ' dark' : ''}`}> 
       <aside className="sidebar">
@@ -261,9 +304,10 @@ function App() {
                 Highly skilled Engineer with over 8+ years of experience in test planning, designing, and execution of backend API testing across major cloud platforms.<br />
                 <span className="location"><i className="fa-solid fa-location-dot"></i> Bangalore, India</span>
               </p>
-              <a href="/resume.pdf" download className="resume-btn">
-                <i className="fa-solid fa-download"></i> Download Resume
-              </a>
+              <button onClick={handleResumeDownload} className="resume-btn" disabled={isDownloading}>
+                <i className={isDownloading ? "fa-solid fa-spinner fa-spin" : "fa-solid fa-download"}></i> 
+                {isDownloading ? 'Downloading...' : 'Download Resume'}
+              </button>
             </div>
           </div>
         </Element>
