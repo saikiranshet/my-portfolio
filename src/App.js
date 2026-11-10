@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import avatar from './Capture.PNG';
-import Typical from 'react-typical';
-import { Link as ScrollLink, Element, Events, scroller } from 'react-scroll';
+import { Link as ScrollLink, Element, Events } from 'react-scroll';
 import Modal from 'react-modal';
 import { motion } from 'framer-motion';
 import Switch from 'react-switch';
@@ -14,47 +13,112 @@ const sections = [
   { id: 'skills', label: 'Skills', icon: 'fa-code' },
   { id: 'experience', label: 'Experience', icon: 'fa-briefcase' },
   { id: 'projects', label: 'Projects', icon: 'fa-diagram-project' },
-  { id: 'achievements', label: 'Achievements', icon: 'fa-trophy' },
+  { id: 'achievements', label: 'Impact', icon: 'fa-chart-line' },
+  { id: 'education', label: 'Education', icon: 'fa-graduation-cap' },
   { id: 'contact', label: 'Contact', icon: 'fa-envelope' },
 ];
 
 const projects = [
   {
-    title: 'Data-Driven Automation Framework',
-    year: '2023',
-    desc: 'Enhanced automation framework using Selenium, Python, PyTest, Git and Jenkins',
-    details: 'One of the key architects in enhancing data-driven automation framework. Reduced monthly effort by 5-man days by enhancing the Tizen IDE data-driven UI automation framework.',
+    title: 'Playwright Automation Framework',
+    year: 'Parabank',
+    desc: 'End-to-end UI and API automation with reusable page objects, fixtures, and CI execution support.',
+    details: 'A Playwright-based automation framework for end-to-end UI and API validation, with reusable page objects, fixtures, and continuous integration support.',
+    url: 'https://github.com/saikiranshet/playwright_automation-_using_automation',
   },
   {
-    title: 'API Test Framework',
-    year: '2023',
-    desc: 'Developed automation frameworks for both front end and back end',
-    details: 'Setting up Framework for test execution, retrieving failure reports, and conducting analysis to make informed sign-off decisions.',
-  },
-  {
-    title: 'IoT Device Testing',
-    year: '2019-2022',
-    desc: 'Designed Selenium test automation Data Driven framework for navigation and other systems',
-    details: 'Published and debugged BDD reports to stakeholders and planned measures for Samsung IoT Devices. Delivered critical & priority automation scripts within strict deadlines for new features.',
+    title: 'REST API Automation Framework',
+    year: 'Python',
+    desc: 'Reusable REST API checks for authentication, data validation, negative cases, and regression runs.',
+    details: 'A Python automation framework covering REST API authentication, response and data validation, negative scenarios, and repeatable regression execution.',
+    url: 'https://github.com/saikiranshet/RESTAPI_FOR_TESTING_PYTHON',
   },
 ];
 
-const skills = [
-  'AI/LLM', 'JIRA', 'Automation', 'Manual Testing', 'Postman', 'Appium', 'Selenium', 'Agile',
-  'SQL', 'No SQL', 'MongoDB', 'Linux', 'VS Code', 'Git', 'Docker', 'AWS CloudWatch', 'PyTest',
-  'API Testing', 'Playwright', 'AI Driven Tests', 'Behave', 'Confluence', 'Jenkins (CI/CD)',
-  'Allure Report', 'Wiremock', 'Load Testing (JMeter)', 'Framework Design', 'XRAY', 'Kafka',
-  'SOAP UI', 'Smoke Testing', 'Regression Testing', 'Problem Solving', 'Shift Left Testing',
-  'Root Cause Analysis'
+const skillGroups = [
+  {
+    title: 'Languages & frontend',
+    skills: ['TypeScript', 'JavaScript (ES6+)', 'Python', 'PowerShell', 'HTML5', 'CSS3', 'Responsive design', 'RxJS', 'Component architecture'],
+  },
+  {
+    title: 'Backend & data',
+    skills: ['FastAPI / Flask exposure', 'REST APIs', 'Postman', 'Authentication & authorization', 'Middleware', 'SQL', 'MySQL', 'MongoDB'],
+  },
+  {
+    title: 'Quality engineering',
+    skills: ['Playwright', 'PyTest', 'Selenium', 'Cypress', 'Behave / Cucumber', 'Robot Framework', 'Appium', 'API & E2E automation'],
+  },
+  {
+    title: 'Cloud, delivery & collaboration',
+    skills: ['Docker', 'Kubernetes', 'AWS', 'Jenkins', 'GitHub Actions', 'Bitbucket Pipelines', 'Git', 'Jira', 'Xray', 'Allure'],
+  },
+  {
+    title: 'Testing & engineering practice',
+    skills: ['Functional & non-functional testing', 'Integration & end-to-end testing', 'Regression & exploratory testing', 'Smoke & sanity testing', 'Security testing', 'Performance & stress testing', 'Reliability testing', 'CI quality gates', 'Agile / Scrum', 'GitHub Copilot', 'Cursor', 'LangChain'],
+  },
 ];
 
 const achievements = [
-  'One of the key architects in enhancing data-driven automation framework using Selenium, Python, PyTest, Git and Jenkins',
-  'Reduced monthly effort by 5-man days by enhancing the Tizen IDE data-driven UI automation framework',
-  'Best Ideation awards from Samsung R and D Institute'
+  { value: '80%', label: 'increase in automated regression coverage' },
+  { value: '80%', label: 'reduction in automation execution time' },
+  { value: '90%', label: 'improvement in product stability' },
+  { value: '99.95%', label: 'availability achieved across releases' },
+  { value: '3x', label: 'improvement in concurrency' },
+  { value: '40%', label: 'reduction in outages' },
+  { value: '30%', label: 'faster test authoring, with 20% more coverage' },
 ];
 
-Modal.setAppElement('#root');
+const experience = [
+  {
+    role: 'Senior Engineer',
+    company: 'Sequoia Consulting Group',
+    duration: 'August 2023 - Present',
+    details: [
+      'Develop enterprise web application features with React, TypeScript, HTML5, and reusable component architecture.',
+      'Build responsive frontend modules integrated with REST APIs and business workflows.',
+      'Define requirements, API contracts, acceptance criteria, test strategies, and risk-based release validation with product, backend, and architecture teams.',
+      'Designed and maintained a Playwright + PyTest framework for UI, API, integration, and end-to-end workflows, increasing automated regression coverage by 80%.',
+      'Integrated automated suites into Jenkins and GitHub Actions, reducing execution time by 80% and adding release quality gates.',
+    ],
+    technologies: 'React, TypeScript, Python, FastAPI, PyTest, Playwright, AWS, SQL, Jenkins, GitHub Actions, Bitbucket Pipelines, Git',
+  },
+  {
+    role: 'Senior Engineer',
+    company: 'Biofourmis India Pvt Ltd',
+    duration: 'August 2022 - July 2023',
+    details: [
+      'Developed Python and React components and built PyTest automation for a cloud healthcare platform based on microservices.',
+      'Designed end-to-end test strategies and validated integrations as system design and architecture evolved.',
+      'Implemented performance and stress tests to assess cluster stability.',
+      'Led functional, security, reliability, and performance testing, contributing to a reported 90% improvement in product stability.',
+    ],
+    technologies: 'React, Python, PyTest, Microservices, Cloud healthcare',
+  },
+  {
+    role: 'Senior Engineer',
+    company: 'Samsung R&D Institute',
+    duration: 'February 2019 - August 2022',
+    details: [
+      'Built a data-driven Selenium framework for navigation systems, accelerating test authoring by 30% and increasing coverage by 20%.',
+      'Published and debugged BDD reports for stakeholders and owned test suites, cases, and end-to-end activities.',
+      'Enhanced Selenium, Python, and PyTest frameworks, reducing monthly effort by five person-days.',
+      'Added soak and chaos scenarios to address scaling gaps; achieved 99.95% availability, 3x concurrency, and 40% fewer outages across releases.',
+    ],
+    technologies: 'Selenium, Python, PyTest, Robot Framework, Java, JavaScript, Jenkins, BDD',
+  },
+  {
+    role: 'Engineer',
+    company: 'Life Signals India Pvt Ltd',
+    duration: 'February 2017 - February 2019',
+    details: [
+      'Established Python and Robot Framework automation practices to reduce manual testing and speed release cycles.',
+      'Worked on embedded and IoT device automation with C and C++, validating I2C, UART, and IPC communication.',
+      'Designed Android and iOS test plans and automated mobile workflows with Appium.',
+      'Built simulation test benches for repeatable runs and reduced test flakiness.',
+    ],
+    technologies: 'Python, Robot Framework, Appium, C, C++, Android, iOS, I2C, UART, IPC',
+  },
+];
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
@@ -65,6 +129,11 @@ function App() {
   const [formStatus, setFormStatus] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+
+  useEffect(() => {
+    const rootElement = document.getElementById('root');
+    if (rootElement) Modal.setAppElement(rootElement);
+  }, []);
 
   // Initialize EmailJS (only if configured)
   useEffect(() => {
@@ -245,7 +314,7 @@ function App() {
         <div className="avatar-container">
           <img src={avatar} alt="Saikiran Shet" className="avatar" />
           <h1>Saikiran Shet</h1>
-          <p className="sidebar-title">SDET-2/QA Engineer</p>
+          <p className="sidebar-title">Senior Engineer</p>
         </div>
         
         {/* Mobile menu button */}
@@ -296,14 +365,16 @@ function App() {
           <div className="hero-banner">
             <div className="hero-text">
               <h2><i className="fa-solid fa-user"></i> About</h2>
-              <span className="animated-title">SDET-2/QA Engineer | Automation Expert | AI & Innovation-Driven</span>
-              <p style={{ marginTop: 16 }}>
-                Dynamic and results-driven Automation Engineer with a passion for optimizing cloud infrastructure. 
-                Experienced in developing and maintaining test automation tools, enhancing CI/CD pipelines, and designing robust API test frameworks. 
-                Professional in Agile Test Methodologies, SDLC, and Software Testing Life Cycle. 
-                Highly skilled Engineer with over 8+ years of experience in test planning, designing, and execution of backend API testing across major cloud platforms.<br />
-                <span className="location"><i className="fa-solid fa-location-dot"></i> Bangalore, India</span>
+              <span className="animated-title">Full Stack Engineer | Quality Engineering | Cloud & AI</span>
+              <p className="profile-summary">
+                Full Stack Engineer with 9+ years of experience, including 5+ years in full-stack application development and 4+ years in software quality engineering and test automation. Builds scalable web applications, REST APIs, and cloud-native solutions with a strong focus on performance, testability, and user experience.
               </p>
+              <div className="profile-metrics" aria-label="Experience overview">
+                <div><strong>9+</strong><span>years total</span></div>
+                <div><strong>5+</strong><span>full-stack development</span></div>
+                <div><strong>4+</strong><span>quality engineering</span></div>
+              </div>
+              <p className="location"><i className="fa-solid fa-location-dot"></i> Bangalore, India</p>
               <button onClick={handleResumeDownload} className="resume-btn" disabled={isDownloading}>
                 <i className={isDownloading ? "fa-solid fa-spinner fa-spin" : "fa-solid fa-download"}></i> 
                 {isDownloading ? 'Downloading...' : 'Download Resume'}
@@ -312,67 +383,30 @@ function App() {
           </div>
         </Element>
         <Element name="skills" id="skills" className="section">
-          <h2><i className="fa-solid fa-code"></i> Technology & Tools</h2>
-          <div className="skills-grid">
-            {skills.map((skill, i) => (
-              <motion.div
-                key={i}
-                className="skill-item"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05, duration: 0.5 }}
-              >
-                <i className="fa-solid fa-check"></i> {skill}
-              </motion.div>
+          <h2><i className="fa-solid fa-code"></i> Technical Skills</h2>
+          <div className="skill-groups">
+            {skillGroups.map((group) => (
+              <div className="skill-group" key={group.title}>
+                <h3>{group.title}</h3>
+                <div className="skills-grid">
+                  {group.skills.map((skill) => <span className="skill-item" key={skill}>{skill}</span>)}
+                </div>
+              </div>
             ))}
           </div>
         </Element>
         <Element name="experience" id="experience" className="section">
           <h2><i className="fa-solid fa-briefcase"></i> Work Experience</h2>
           <div className="experience-list">
-            <div className="experience-item">
-              <h3>SDET-2</h3>
-              <p className="company">Sequoia Consulting Group</p>
-              <p className="duration">August 2023 - Present</p>
-              <ul>
-                <li>Revising regression test cases and executing regression suites to ensure the continued stability of simulator dashboard</li>
-                <li>Setting up Framework for test execution, retrieving failure reports, and conducting analysis to make informed sign-off decisions</li>
-                <li>Developed automation frameworks for both front end and back end</li>
-                <li>Conducting debugging and in-depth failure analysis in collaboration with developers and product owners</li>
-                <li>Coaching team members in identifying team goals and evaluating team progress for continuous improvement</li>
-              </ul>
-            </div>
-            <div className="experience-item">
-              <h3>Senior QA Engineer</h3>
-              <p className="company">Biofourmis India Pvt Ltd</p>
-              <p className="duration">August 2022 - July 2023</p>
-              <ul>
-                <li>Web App Manual and Automation Testing</li>
-                <li>Strong Experience in test planning and design of backend API testing for various business and technical scenarios</li>
-                <li>Collaborating closely with developers, product managers, and key stakeholders to ensure alignment and effectiveness</li>
-              </ul>
-            </div>
-            <div className="experience-item">
-              <h3>Senior QA Engineer</h3>
-              <p className="company">Samsung R and D Institute</p>
-              <p className="duration">February 2019 - August 2022</p>
-              <ul>
-                <li>Designed Selenium test automation Data Driven framework for navigation and other systems</li>
-                <li>Published and debugged BDD reports to stakeholders and planned measures for Samsung IoT Devices</li>
-                <li>Delivered critical & priority automation scripts within strict deadlines for new features</li>
-              </ul>
-            </div>
-            <div className="experience-item">
-              <h3>Engineer</h3>
-              <p className="company">Life Signal India Pvt Ltd</p>
-              <p className="duration">February 2017 - February 2019</p>
-              <ul>
-                <li>Worked on IoT Device testing and automating the device as per the requirement</li>
-                <li>Experience with testing mobile applications (Android, iOS) and automated test cases using Appium with extensive use of pytorch, matlab</li>
-                <li>Worked closely with the functional team (Dev) to follow the user-centric quality of feature design by monitoring KPIs, customer VOC and feedback</li>
-              </ul>
-            </div>
+            {experience.map((job) => (
+              <article className="experience-item" key={job.company}>
+                <h3>{job.role}</h3>
+                <p className="company">{job.company}</p>
+                <p className="duration">{job.duration}</p>
+                <ul>{job.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
+                <p className="technology-line"><strong>Technologies:</strong> {job.technologies}</p>
+              </article>
+            ))}
           </div>
         </Element>
         <Element name="projects" id="projects" className="section">
@@ -408,33 +442,48 @@ function App() {
                 <h2>{modalProject.title}</h2>
                 <p><b>Year:</b> {modalProject.year}</p>
                 <p>{modalProject.details}</p>
+                <a className="project-repository" href={modalProject.url} target="_blank" rel="noopener noreferrer">
+                  View project on GitHub <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
                 <button className="modal-close" onClick={closeModal}>Close</button>
               </div>
             )}
           </Modal>
         </Element>
         <Element name="achievements" id="achievements" className="section">
-          <h2><i className="fa-solid fa-trophy"></i> Achievements</h2>
-          <div className="achievements-list">
-            {achievements.map((achievement, i) => (
-              <motion.div
-                key={i}
-                className="achievement-item"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-              >
-                <i className="fa-solid fa-award"></i> {achievement}
-              </motion.div>
+          <h2><i className="fa-solid fa-chart-line"></i> Selected Impact</h2>
+          <div className="impact-grid">
+            {achievements.map((achievement) => (
+              <div className="impact-item" key={achievement.label}>
+                <strong>{achievement.value}</strong>
+                <span>{achievement.label}</span>
+              </div>
             ))}
+          </div>
+        </Element>
+        <Element name="education" id="education" className="section">
+          <h2><i className="fa-solid fa-graduation-cap"></i> Education & Certification</h2>
+          <div className="education-entry">
+            <div>
+              <h3>Bachelor of Technology (B.Tech)</h3>
+              <p>NMAM Institute of Technology</p>
+            </div>
+            <span>May 2016</span>
+          </div>
+          <div className="certification-entry">
+            <i className="fa-solid fa-certificate"></i>
+            <span>ISTQB Certified Engineer</span>
+          </div>
+          <div className="certification-entry">
+            <i className="fa-solid fa-language"></i>
+            <span>Language: English</span>
           </div>
         </Element>
         <Element name="contact" id="contact" className="section">
           <h2><i className="fa-solid fa-envelope"></i> Contact</h2>
           <div className="contact-info">
             <p><i className="fa-solid fa-phone"></i> <strong>Phone:</strong> +91-8861532391</p>
-            <p><i className="fa-solid fa-envelope"></i> <strong>Email:</strong> Saikiran.shet@gmail.com</p>
+            <p><i className="fa-solid fa-envelope"></i> <strong>Email:</strong> <a href="mailto:saikiran.shet@gmail.com">saikiran.shet@gmail.com</a></p>
             <p><i className="fa-solid fa-location-dot"></i> <strong>Location:</strong> Bangalore, India</p>
           </div>
           <form className="contact-form" onSubmit={handleFormSubmit}>
@@ -444,10 +493,10 @@ function App() {
             <button type="submit">Send</button>
             {formStatus && <div className="form-status">{formStatus}</div>}
           </form>
-          <p style={{ marginTop: 16 }}>Connect with me on <a href="https://www.linkedin.com/in/saikiran-tukaram-shet-39b146121/" target="_blank" rel="noopener noreferrer">LinkedIn</a> and <a href="https://github.com/saikiranshet/my-portfolio" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+          <p style={{ marginTop: 16 }}>Connect with me on <a href="https://www.linkedin.com/in/saikiran-tukaram-shet-39b146121/" target="_blank" rel="noopener noreferrer">LinkedIn</a> and <a href="https://github.com/saikiranshet" target="_blank" rel="noopener noreferrer">GitHub</a></p>
         </Element>
         <footer>
-          <p>&copy; 2024 Saikiran Shet</p>
+          <p>&copy; {new Date().getFullYear()} Saikiran Shet</p>
         </footer>
       </main>
     </div>
