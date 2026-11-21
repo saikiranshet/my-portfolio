@@ -227,6 +227,8 @@ function App() {
           name: form.name,
           email: form.email,
           message: form.message,
+          _replyto: form.email,
+          _subject: `Portfolio contact from ${form.name}`,
         }),
       })
       .then((response) => {
