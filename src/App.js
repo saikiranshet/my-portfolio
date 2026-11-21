@@ -328,7 +328,7 @@ function App() {
           <div className="hero-banner">
             <div className="hero-text">
               <h2><i className="fa-solid fa-user"></i> About</h2>
-              <span className="animated-title">Senior Engineer | Full-Stack Development | AI & Cloud</span>
+              <span className="animated-title">Senior Engineer</span>
               <p className="profile-summary">
                 Senior Engineer with 9+ years of experience, including 4 months in full-stack application development. Experienced in designing and developing scalable web applications, AI, RESTful APIs, and cloud-native solutions using AI, TypeScript, JavaScript, Python, SQL, Docker, and CI/CD pipelines.
                 <br />
