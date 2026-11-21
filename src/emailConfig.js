@@ -16,6 +16,5 @@ export const emailConfig = {
 export const formspreeConfig = {
   // Your Formspree endpoint (sign up at https://formspree.io/)
   // This will send emails to saikiran.shet@gmail.com
-  // Replace YOUR_FORM_ID with the actual form ID from Formspree
-  ENDPOINT: "https://formspree.io/f/YOUR_FORM_ID"
-}; 
+  ENDPOINT: "https://formspree.io/f/mdkdzbyb"
+};
