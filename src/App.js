@@ -266,7 +266,7 @@ function App() {
   };
 
   const handleResumeView = () => {
-    window.open(`${process.env.PUBLIC_URL}/Saikiran_Shet_Resume.pdf?v=20261121`, '_blank', 'noopener,noreferrer');
+    window.open(`${process.env.PUBLIC_URL}/resume.pdf?v=20261121`, '_blank', 'noopener,noreferrer');
   };
 
   return (
