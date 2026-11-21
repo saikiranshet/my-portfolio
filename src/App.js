@@ -128,7 +128,6 @@ function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     const rootElement = document.getElementById('root');
@@ -266,46 +265,8 @@ function App() {
     setMobileMenuOpen(false);
   };
 
-  const handleResumeDownload = () => {
-    setIsDownloading(true);
-    try {
-      // Method 1: Using fetch to get the file and create blob
-      fetch(process.env.PUBLIC_URL + '/resume.pdf')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.blob();
-        })
-        .then(blob => {
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'Saikiran_Shet_Resume.pdf';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          window.URL.revokeObjectURL(url);
-          setIsDownloading(false);
-        })
-        .catch(error => {
-          console.error('Download failed:', error);
-          // Fallback method
-          const link = document.createElement('a');
-          link.href = process.env.PUBLIC_URL + '/resume.pdf';
-          link.download = 'Saikiran_Shet_Resume.pdf';
-          link.target = '_blank';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          setIsDownloading(false);
-        });
-    } catch (error) {
-      console.error('Download error:', error);
-      // Final fallback - open in new tab
-      window.open(process.env.PUBLIC_URL + '/resume.pdf', '_blank');
-      setIsDownloading(false);
-    }
+  const handleResumeView = () => {
+    window.open(`${process.env.PUBLIC_URL}/resume.pdf`, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -365,19 +326,21 @@ function App() {
           <div className="hero-banner">
             <div className="hero-text">
               <h2><i className="fa-solid fa-user"></i> About</h2>
-              <span className="animated-title">Full Stack Engineer | Quality Engineering | Cloud & AI</span>
+              <span className="animated-title">Senior Engineer | Full-Stack Development | AI & Cloud</span>
               <p className="profile-summary">
-                Full Stack Engineer with 9+ years of experience, including 5+ years in full-stack application development and 4+ years in software quality engineering and test automation. Builds scalable web applications, REST APIs, and cloud-native solutions with a strong focus on performance, testability, and user experience.
+                Senior Engineer with 9+ years of experience, including 4 months in full-stack application development. Experienced in designing and developing scalable web applications, AI, RESTful APIs, and cloud-native solutions using AI, TypeScript, JavaScript, Python, SQL, Docker, and CI/CD pipelines.
+                <br />
+                Strong background in software quality engineering enables delivery of reliable, maintainable, and production-ready applications with a focus on performance, testability, and user experience. Skilled in collaborating with cross-functional teams across the complete software development lifecycle in Agile environments.
               </p>
               <div className="profile-metrics" aria-label="Experience overview">
                 <div><strong>9+</strong><span>years total</span></div>
-                <div><strong>5+</strong><span>full-stack development</span></div>
-                <div><strong>4+</strong><span>quality engineering</span></div>
+                <div><strong>4</strong><span>months full-stack development</span></div>
+                <div><strong>Quality</strong><span>engineering expertise</span></div>
               </div>
               <p className="location"><i className="fa-solid fa-location-dot"></i> Bangalore, India</p>
-              <button onClick={handleResumeDownload} className="resume-btn" disabled={isDownloading}>
-                <i className={isDownloading ? "fa-solid fa-spinner fa-spin" : "fa-solid fa-download"}></i> 
-                {isDownloading ? 'Downloading...' : 'Download Resume'}
+              <button onClick={handleResumeView} className="resume-btn" type="button">
+                <i className="fa-solid fa-file-pdf"></i>
+                View Resume
               </button>
             </div>
           </div>
